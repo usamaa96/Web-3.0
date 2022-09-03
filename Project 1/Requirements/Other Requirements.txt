@@ -1,0 +1,9 @@
+React App Deployed with Vercel Cli: https://ethereum-portal-dymr7j2s0-usamaa96.vercel.app/
+
+Etherscan Contract Link: https://rinkeby.etherscan.io/address/0xfec7C2F62F82C41A77A6edD1B26Ba28Fd3BcCA57
+
+Contracts Deployed
+  1) 0xfec7C2F62F82C41A77A6edD1B26Ba28Fd3BcCA57
+  2) 0x52D85773Cc2F8173AE2557AD4b408bD5f295C513
+  3) 0xEED3FA588e67B7e31fa90fbD6E4A464B9d85CE1E
+  4) 0xe72c355f5a2Ba7a5ECAC6776c9343dEcB418AC5b
