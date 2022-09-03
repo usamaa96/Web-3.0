@@ -1,0 +1,128 @@
+Web 3.0 Training (Project 1)
+---
+
+Build Web 3.0 App Using Ethereum & Solidity
+  .url: https://buildspace.so/solidity
+
+Install Discord desktop app
+   .Social messaging platform to interact with public forum
+   .url: https://discord.com/
+   
+Join the buildspace
+   .url: https://discord.com/invite/buildspace
+   
+  
+Install MetaMask chome extension for Ethereum Wallet
+
+Now we will create our ethereum smart contract and deploy onto the network to be accessed by front end portal 
+
+Create a directory (must be on desktop. Not working inside /Documents/**)
+Follow the steps
+  1) npm init -y
+  2) npm install --save-dev hardhat@2.9.9 (hardhat is the ethereum development environment where we compile our contracts and run them)
+  3) npx hardhat (will create hardhat project)
+  4) Install hardhat dependencies npm install --save-dev @nomiclabs/hardhat-waffle ethereum-waffle chai @nomiclabs/hardhat-ethers ethers
+  5) Test hardhat using the following commands
+        a) npx hardhat accounts
+		b) npx hardhat compile
+		c) npx hardhat test
+
+Open the hardhat project in editor and cleanup some files. Delete files under scripts/, test/ and contract/ folder
+
+Create a new file under contract/ folder (.sol extension) and write some code contract code.
+    .See code for more detail about step by step execution (Provided in comments)
+
+Command to execute JavaScript file in order to compile and deploy the contract (The contract is temporary deployed and when hardhat execution
+is completed, deployment is destroyed)
+    .npx hardhat run scripts/run.js
+	
+	
+** The blockchain = Think of it as a cloud provider, kinda like AWS, but it's owned by no one. It's run by compute power from mining 
+machines all over the world. Usually these people are called miners and we pay them to run our code! **
+
+** A smart contract = Kinda like our server's code with different functions people can hit. **
+
+To deploy the contract, wallet address is required
+To call any function of contract, person must be connected to the wallt.
+
+How to make deployment alive just like a local server?
+   .npx hardhat node (Will start a local server with 20 different accounts to work with all containing 10k ETH)
+   .This will initialize an empty blockchain
+   .Deploy the contract on this network by running command npx hardhat scripts/deploy.js --network localhost
+
+GAS => Unit describing the amount of computational power needed to execute specific operations on the network.
+Transaction => Perform an action on the Ethereum blockchain we call it a transaction. 
+			   .Sending someone ETH is a transaction
+			   .Doing something that updates a variable in our contract is also considered a transaction.
+			   .Deploying a smart contract is also a transaction.
+Block Difficulty => Tells miners how hard the block will be to mine based on the transactions in the block. Blocks get harder for a # of 
+                    reasons, but, mainly they get harder when there are more transactions 
+
+
+Create a new React Project and Deploy it on Vercel
+   .Install vercel cli (npm i -g vercel)
+   .Sign In on Vercel account
+   .Go to project locaction and run command 'verce' to deploy the app.
+   
+To deploy the Ethereum contract 
+    .Create an account on QuickNode where we can built free blockchain applications
+	.It gives us a simple way to deploy to the real Ethereum blockchain.
+	
+As we know that blockchain has no owner. There are just bunch of computers around the world called miners who run it.
+When we deploy a contract, we need to tell all those miners that here is my contract, add it to blockchain and start using it
+QuickNode helps doing all these stuff. It essentially helps us broadcast our contract creation transaction so that it can be picked up by 
+miners as quickly as possible. Once the transaction is mined, it is then broadcasted to the blockchain as a legit transaction. From there, 
+everyone updates their copy of the blockchain.
+
+
+On QuickNode, create an endpoint by checking "Ethereum" and "Rinkby" and press Create
+We use Rinkby (Testnet) because for Mainnet it costs realt ETH money.
+After creating, we will get an endpoint URL which should be kept secret
+
+We should know that, testnets are run by actual miners and mimic real-world scenarios.
+
+Connect MetaMask Wallet to RinkeBy Test Network and go to this link to transfer 0.1ETH to the wallet 
+   .https://faucets.chain.link/rinkeby (Chainlink. Takes few minutes to transfer ETH - 0.1ETH)
+   .https://faucet.rinkeby.io/ (Official Rinkeyby. Takes upto 1 day to transfer ETH - 3/7.5/18.75 ETH)
+   
+Add MetaMask private key and QuickNode endpoint url in the .env file to be linked with hardhat.config.js
+Private key is needed in order to perform a transaction like deploying a contract, you need to "login" to the blockchain
+This private key is same as of Mainnet so dont ever leak and not push onto git repo as well
+
+Run this command to deploy the contract to the blockchain
+  npx hardhat run scripts/deploy.js --network rinkeby
+
+We can check our contract transactions at Etherscan by searching our contract address returned just after deployment
+Etherscan is a place that just shows us the state of the blockchain and helps us see where our transaction is at.
+
+We can now interact our web app with this contract deployed. We need to connect our web app to MetaMask wallet because for every transaction,
+wallet connection is neccessary
+In React code, we use "eth_accounts" to check if wallet is already connected to the account because a wallet can contain multiple accounts, 
+so we just grab the first account.
+If not connected to any account, then we use "eth_requestAccounts" to open the MetaMask extension and connect to any account. Till then our
+app will wait.
+
+Reading and writing data
+Have a look at this links to understand about signers, abi content and GAS
+https://ethereum.org/en/developers/docs/gas/?utm_source=buildspace.so&utm_medium=buildspace_project
+https://docs.ethers.io/v5/api/signer/#signers?utm_source=buildspace.so&utm_medium=buildspace_project
+https://docs.soliditylang.org/en/v0.8.14/abi-spec.html?utm_source=buildspace.so&utm_medium=buildspace_project
+
+Reading data from blockchain is free but writing to blockchain requires GAS and when we write data we will see that MetaMask will pop
+up to pay for the GAS. We can also copy the transaction hash and see it getting evaluated in real time on Etherscan
+
+Solidity Events and its Emmisison
+Generally, events are used to inform the calling application about the current state of the contract, with the help of the logging facility 
+of EVM. Events notify the applications about the change made to the contracts and applications which can be used to execute the dependent 
+logic
+
+If the contract is changed, we need to redeploy it including
+    .update contract address on front end
+	.update abi file on front end
+This is done because smart contracts are immutable and cannot be changed. Changing a contract needs full redeploy
+All data will be lost because of redeploy
+
+Whenever we deploy the contract, we can also fund it as well to send someone etheres. Currently, our contract worth 0 ETH because we never
+funded
+To fund the contract we use {value: } property when deploying the contract with provided ETH that will be deducted from our wallet
+We have to make our constructor payable to tell the contract we pay ETH from this contract
