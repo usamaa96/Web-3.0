@@ -1,0 +1,105 @@
+Web 3.0 Training (Project 2)
+---
+
+Mint Own NFT Collection
+  .url: https://buildspace.so/p/mint-nft-collection
+
+
+An NFT is a "token" that a person can own that links to some piece of "data" (ex. a link to a piece of digital art, a video, an image, etc). 
+The trick with NFTs is that each "token" has a unique identifier that lets the owner prove that it's one of a kind
+
+Smart contract has all the logic around our NFTs. They will be deployed on blockchain.
+A client website that will let people easily mint NFTs from our collection.
+
+Minting an NFT means you take a digital file and turn it into a digital asset that can be stored on the blockchain. Once it's become a 
+digital asset, your NFT can be put into circulation, and it can be sold via smart contract.
+
+Follow instructions in Project 1 to install hardhat and relevant dependencies and create a hardhat project
+
+Install dependencies OpenZeppelin which is another library that's used a lot to develop secure smart contracts.
+   .npm install @openzeppelin/contracts
+
+Create a project with npx hardhat
+
+npx hardhat run scripts/deploy.js to deploy the contract on local blockchain
+
+Follow instruction in Project 1 to create a simple .sol, .js file and deploy it with npx hardhat
+Modify the .sol file to mint NFT
+
+NFT standatd => https://eips.ethereum.org/EIPS/eip-721?utm_source=buildspace.so&utm_medium=buildspace_project
+OpenZeppelin implements the NFT standards and allow us to write custom logic on top of it so that we can avoid those bioler plate code
+
+COnstruct the JSON of any kind with the standard and host it by pasting it on https://jsonkeeper.com/
+Example JSON
+{
+	"name": "Football Shoes",
+    "description": "Its noway close!",
+    "image": "https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blte7f89fd9c8b78713/61163b3183a7ab110814d2d9/23f6aba730eb479e6c668e3e08501996401740c0.jpg?quality=80&format=pjpg&auto=webp&width=1000"
+}
+Hosted Location: https://jsonkeeper.com/b/M8B8
+
+Setting the tokenUri with the NFT and metadata (json hosted website)
+_setTokenURI(newItemId, "https://jsonkeeper.com/b/M8B8");
+
+Follow the instruction in Project 1 to get the QuickNode URI, RinkeBy Testnet Private Key and deploy the contract
+Mint the NFT with the deployed contract on actual blockchain.
+
+Head on to https://testnets.opensea.io/?utm_source=buildspace.so&utm_medium=buildspace_project
+Search for contract and we will see actual minted NFTs we just did
+
+Here the problem is, what if the image URL we use in NFT standard JSON goes down? Also what if JSON we hosted that website goes down then
+our NFT will be broken and the user who minted NFT will no longer be accessible.
+THe solution is to keep NFT data on chain (on the contract itself) rather than relying on 3rd party sites.
+In this way trust is also built between users because blockchain is up forever and hence our NFT will be up forever.
+Many popular project use on-chain data Like Loot => https://techcrunch.com/2021/09/03/loot-games-the-crypto-world/?utm_source=buildspace.so&utm_medium=buildspace_project
+
+Common way to store NFT data for images is using SVG (image built using code)
+Example SVG image
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 350 350">
+    <style>.base { fill: white; font-family: serif; font-size: 14px; }</style>
+    <rect width="100%" height="100%" fill="black" />
+    <text x="50%" y="50%" class="base" dominant-baseline="middle" text-anchor="middle">EpicLordHamburger</text>
+</svg>
+
+View svg images at => https://www.svgviewer.dev/?utm_source=buildspace.so&utm_medium=buildspace_project
+
+We want to somehow get this data in our NFT without hosting it anywhere
+Take svg code and encode it in base64 (accepted standard for encoding data into a string)
+Form a url like this => data:image/svg+xml;base64,INSERT_YOUR_BASE64_ENCODED_SVG_HERE
+
+We now have NFT image data permanent
+Update the JSON file and replace the image url link with this
+{
+	"name": "Football Shoes",
+    "description": "Its noway close!",
+    "image": "data:image/svg+xml;base64,INSERT_YOUR_BASE64_ENCODED_SVG_HERE"
+}
+Besides hosting this JSON data, we will base64 this JSON data
+Form a url like this => data:application/json;base64,INSERT_YOUR_BASE64_ENCODED_JSON_HERE
+
+Here is how we now hosted our JSON data also permanently
+Change the _setTokenURI and add updated JSON data url and redeploy the contract to see the changed
+
+Now we can make changes to our contract in such a way that using solidity we generate SVG images dynamically with 3 different words
+in center of a black box. Encode the string in base64 with the help of Base64.sol helper library and finally built the JSON and encode it
+and set the final token URI.
+
+A problem here is that we cannot store large images or videos in SVG formats because our contract will be so complex and will require a lot
+of GAS to execute a trasacntion.
+We probably use S3 bucket or GCP storage. We also has IPFS which is a distributed file system run by some strangers and trustworthy. IPFS
+is considered as an industry standard to store NFT assets. We upload our NFTs and it returns back unique content hash id which we use.
+
+We upload our files to a separate pinning service so that our files our cached and easily retrievable. Pinata is a good pinning service.
+We make account on Pinata, upload our content and it will give CID value which we will append to IPFS link
+Pinata => https://www.pinata.cloud/?utm_source=buildspace&utm_medium=buildspace_project
+IPFS => https://decrypt.co/resources/how-to-use-ipfs-the-backbone-of-web3
+Link For IPFS => https://cloudflare-ipfs.com/ipfs/INSERT_YOUR_CID_HERE
+
+We then put this IPFS link into _setTokenURI in our contract code
+
+NFT is just a JSON file at the end of the day that links to some metadata. You can put this JSON file up on IPFS. You can also put the NFT 
+data itself (ex an image, video, etc) up on IPFS.
+
+Right now our users only have to pay gas fees to mint awesome nfts and we not getting any of that money! There are several ways to alter 
+our smart contract that make the user pay to mint the transactions, such as adding payable to our contract and using require to set a 
+minimum amount.

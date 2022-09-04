@@ -1,0 +1,14 @@
+Deployed Contracts
+  1) 0x94E0e908C136f0dA5efAc055975F863B60DF0eB3
+  2) 0x3De93df3480Fb5aD80F2f00f358CBaD8103aDeA8
+  3) 0x183e41E4ac03353a63503EF8EAeC65015B500DE6
+  4) 0x6d16688E69d9f8D18D8bdE3E4f6A13668114A97E
+  5) 0xF267E1A54b1674E0980d039c89CbE6151bF8F498
+  6) 0x368744a929e3ec6eF81604583F77455cCd10806E
+  
+OpenSea Testnet links for NFTs
+  1) https://testnets.opensea.io/collection/squarenft-stk7jjlzow
+  2) https://testnets.opensea.io/collection/squarenft-qbosna775t
+  
+
+Deployed Site => https://nft-portal-lz65whico-usamaa96.vercel.app/
