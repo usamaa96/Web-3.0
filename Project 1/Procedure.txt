@@ -11,7 +11,10 @@ Install Discord desktop app
 Join the buildspace
    .url: https://discord.com/invite/buildspace
    
-  
+   
+Intro To Blockchain and Ethereum
+https://ethereum.org/en/developers/docs/intro-to-ethereum/?utm_source=buildspace.so&utm_medium=buildspace_project
+
 Install MetaMask chome extension for Ethereum Wallet
 
 Now we will create our ethereum smart contract and deploy onto the network to be accessed by front end portal 
