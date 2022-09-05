@@ -1,0 +1,155 @@
+Web 3.0 Training (Project 3)
+---
+
+Build Your Own DAO with JavaScript
+  .url: https://buildspace.so/build-dao-with-javascript
+ 
+What is a DAO?
+Denetralized Autonomous Organization with no central leadership
+
+With an Example, 
+A DAO is a community of people with a shared bank account. Decisions around how that bank account is used are made by voting on different 
+proposals that members create. When a proposal gets enough votes, it is executed on-chain.
+
+In this project we are connecting our wallet with the thirdweb library which maintains all the code (managing user's state with the wallet)
+on its behalf. Previously (In Project 1 & 2) this was done manually.
+What thirdWeb gives us, is a set of tools to create all our smart contracts without writing any Solidity.
+
+Thirdweb uses a secure, standard contracts
+  Code => https://github.com/thirdweb-dev/contracts?utm_source=buildspace.so&utm_medium=buildspace_project
+  
+We just write some JS script to write + deploy our smart contract
+There is also Thirdweb Dashboard where we can create contracts without writing any code
+   .=> https://thirdweb.com/dashboard?utm_source=buildspace&utm_medium=buildspace_project
+   
+Thirdweb doesn't have a database, all your data is stored on-chain.
+
+1)
+In the first script, we are initializing the thirdweb with data from .env file (wallet address, private key and quick node url)
+
+
+2)
+In the second script, we are setting the metadata for our NFT to provide membership to the users
+Create and Deploy ERC-115 contract to RinkeBy
+
+ERC-721 where every NFT is unique, even if they have the same image, name, and properties. 
+With an ERC-1155, multiple people can be the holder of the same NFT. In this case, our "membership NFT" is the same for everyone, so 
+instead of making a new NFT every time we can simply assign the same NFT to all our members. This is also more gas efficient!
+
+The editionDrop address is the contract address which is deployed
+
+We can retrieve our deployed contract from Thirdweb Dashboard 
+   => https://thirdweb.com/dashboard?utm_source=buildspace&utm_medium=buildspace_project
+   
+
+Uptil now we have created ERC-1155 contract and add some basic metadata
+
+
+3)
+In the third script, we deploy metadata associated with our membership NFT
+We set up our actual NFT on our ERC-1155 using createBatch
+
+Example NFT
+{
+	name: "Football Shirt",
+	description: "This NFT will give you access to FootballDao!",
+	image: readFileSync("scripts/assets/shirt.jpg"),
+}
+
+Members will beed Football Shirt to join FootballDao
+
+
+4)
+In the fourth script, we set the NFT claims like when this NFT can be minted, total number of count for this NFT to be minted, price of
+this NFT etc
+
+
+5)
+Now in the main App.js, we just check if the connected wallet has already minted the NFT or not? If not then we show the button to Mint
+the NFT and after Minting NFT, the user becomes part of our DAO
+
+
+6)
+A governance token allows users to vote on proposals. For example, a proposal may say something like “I want NarutoDAO to send 100,000 
+$HOKAGE to wallet address 0xf79a3bb8d5b93686c4068e2a97eaec5fe4843e7d for being an extraordinary member”. Then, members would vote on it.
+
+Users with more governance token are more powerful. Usually, token is awarded to members of the community who have brought the most value
+like members of the community who joined at the earliest, members who kept NFTs for a longer period of time, members who shared the post
+and got more likes, etc. The formula can be anything.
+
+In script five we create a standatd ERC-20 token contract and deploy it. THis custom token we can also add into our metamask also just like
+we add Ethereum as ETH.
+    Token Address => 0x967873281612794bbA31b6286c6Aa9F33274e0B0
+Currently there are 0 custom tokens for people to avail it. We need to assign a limit to it
+
+
+7)
+In script six we set the token's max supply
+
+
+8)
+In script 7, we airdrop the token to the wallet address to those who have minted our Football Shirt NFT in Football DAO
+This airdropping formula could be anything like the address with the most minted nfts, or address with the most likes etc.
+Currently we are generating a random number and airdropping every wallet address who have minted our Football Shirt NFT.
+
+
+9)
+How to make use of these governance token?
+We set up a governance voting contract that lets people vote on proposals using their tokens
+
+The voting contract is literally a way to let people vote on stuff. Like a DAO member can create a proposal by spending some amount of token
+and other members vote on this by spending some token.
+
+voting_token_address => so that only our token is acceptable for this voting contract
+voting_delay_in_blocks => give people some time to go over the proposal before they’re allowed to vote on it. 
+voting_period_in_blocks => specifies how long someone has to vote once a proposal goes lives, we do this in blocks, which 
+                           depending on the blockchain you're on, might take longer, for Ethereum/Rinkeby, there's one block every 13 seconds 
+						   so, there's 6570 blocks in a day.
+
+voting_quorum_fraction => let’s say a member creates a proposal and the other 199 DAO members are on vacation at Disney World and aren’t 
+                          online. Well, in this case, if that one DAO member creates the proposal and votes “YES” on their own proposal — 
+						  that means 100% of the votes said “YES” (since there was only one vote) and the proposal would pass once 
+						  voting_period_in_blocks is up! To avoid this, we use a quorum which says “In order for a proposal to pass, a 
+						  minimum x % of token must be used in the vote”.
+						  0 value means the proposal will pass regardless of what % of token was used on the vote. 
+						  This means one person could technically pass a proposal themselves if the other members are on vacation. 
+						  The quorum you set in the real world depends on your supply and how much you initially airdropped.
+
+proposal_token_threshold => "0" which allows anyone to actually create a proposal even if they hold zero governance token. 
+                            Up to you what you want to set this at.
+							
+Script 8 defines all these property and deploys a voting contract
+
+
+10)
+Currently our coting governance contract has 0 supply of tokens because we did not set any.
+Lets say if there is a proposal to "Send Mr.X 500 FOOT token for being an helping community member" our contract cannot do it because it has
+0 supply of tokens
+
+The deployer of the voting contract can transfer tokens into the contract so in script 9 we grab the wallet find how many tokens in that and 
+transfer 45% of the token into our voting contract
+
+
+11)
+Now since we have supplied tokens to our voting contract we can create proposals and let people vote on it
+In script 10, we created 2 proposals
+   1) THe voting contract (treasury) is running out of tokens so it mints more tokens from the wallet address of the owner who created the
+      contract to reward more people.
+   2) Transferring 6000 tokens to wallet address  (We in this case ) for being valuable member.
+
+   
+12)
+Displaying proposals on portal so that users can vote on it.
+Note that once the time has passed for a proposal, any member of DAO can execute the proposal and its not the responsibility of one individual
+
+For example. Let’s say we’re dealing with the proposal where we’re minting an additional 5,000 tokens. If votes "for" proposal > votes 
+"against" proposal  — then anyone can trigger the proposal and bam our contract will mint the tokens. Kinda wild, right? We have to trust 
+no one except the blockchain
+
+Imagine being in a corrupt country, voting for something, and then your government lies to you and says “Hey actually we didn’t get enough votes jk” when you really did lol. Or, imagine they say, “Okay, we got enough votes we’ll do this we promise” and never 
+do! In this case, everything is codified and code does not lie.
+
+
+13)
+In script 11, we are removing the admin rights because the contract deployer can supply any amount of token to himself that will
+obviously freak out all other members in our DAO. So removing admin access and the only one minter is left is the ERC-20 contract itself.
