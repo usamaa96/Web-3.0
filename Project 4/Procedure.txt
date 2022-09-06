@@ -1,0 +1,73 @@
+Web 3.0 Training (Project 4)
+---
+
+Build Domain On Polygon
+  .url: https://buildspace.so/build-polygon-ens
+  
+  
+What is Polygon?
+
+Polygon is a protocol and framework that consists of a bunch of different blockchains. 
+Their most popular chain is the Polygon PoS chain. It's another chain that runs alongside the Ethereum and periodically submits 
+checkpoints to it.
+
+The Ethereum blockchain is referred to as a “layer 1” blockchain because we can build other blockchains on top of it. 
+That’s exactly what the Polygon PoS chain is: it’s a blockchain built on top of Ethereum that runs in parallel, making it the second layer.
+
+Polygon PoS chain solves the complexity of Ethereum chain as Ethereum chain consists of few challenges like
+   .Low TPS (only 30 transactions per seconds which makes it very slow)
+   .High GAS fees. TO transfer 1$ to a friend, Ethereum takes 20$ for transferring only.
+   
+Example
+..
+Imagine you were running a kitchen as a chef. It’d be pretty annoying for you to have to take the order, go back to the kitchen, cook it, 
+and then serve it. You’d get backed up with traffic pretty quickly! Instead, you would hire a team of waiters to act as a layer between 
+the kitchen and the customers. The waiters would then take the orders more efficiently and give them to the kitchen directly.
+
+This is similar to the relationship Ethereum has with Polygon. Ethereum wasn’t built to handle an insane # of transactions so it gets 
+back up quickly. Polygon is able to handle a higher transaction count and then it bundles up all those transactions up and deposits them to 
+Ethereum as the final source of truth.
+..
+
+This project is to create own domain service where people can buy their own domain from our smart contract
+
+We know that there are multiple Domain Name Services which allow you to purchase domain names from already registered domains (.com, .org)
+etc.
+There is also a domain called .eth which is developed by Ethereum Name Service (ENS) which means that we can create our own domains without
+any permissions. 
+We can built a smaller version of ENS on the polygon framework to register our own domains. Anybody can buy the domain NFT because it will
+be on public blockchain
+
+Usually what happens is that if we want to make my own domain, then all the big internet providers would need to accept it on their end. 
+Else, the domain would just lead to a “Does not exist” error page.
+TO create a new top level domain (.dev, .net) takes 4 to 5 years and lot of money with Web 2.0
+With Web 3.0 we can develop in few days.
+
+Create a new project and start local Ethereum Environment as discussed in Previous Projects
+
+Create basic mappings for domain and records to be registered and updated by only those users who have created it.
+
+ENS domains are just NFTs under the hood. It’s unique and only one wallet can hold a certain domain at a time.
+We will also turn our domains into NFTs that are viewable on OpenSea and sell them for different amounts depending on how long the domain is.
+
+We receive payment (parseEther) from the user's wallet to register our domain
+We check if the submitted amount is equivalent to the price of the domain
+We are calculating price in 'Matic'. Matic token has 18 decimals so we put *10**18 at the end of price
+
+That’s how easy it is taking payments with smart contracts! No silly payment processors, signups, random credit card fees. One line of code
+
+If we think about traditional web2 domains, they're already NFTs. There can only ever be one domain for each name. Multiple people can't own 
+the same domain. When you buy a domain, you actually own and control the only copy on the entire internet! So we're just bringing that over, 
+but even better cause you can trade/transfer these very easily.
+
+Using Alchemy instead of QuickNode which helps us to broadcast our contract on the blockchain, picked up by miners, mine the transaction and
+inform all other miners to update the copy of their blockchains
+
+Add the polygon network in metamast as it is not in it by default
+  => https://mumbai.polygonscan.com/?utm_source=buildspace.so&utm_medium=buildspace_project
+
+  
+As soon as people interact with out Domain Service, they pay MATIC for registering the domains
+These payments stored in contract balance and we assign the owner as payable because the contract can transfer money only to the owner of
+the Domain Service
+There is a withdraw() function which transfers contract stored money paid by user to the owner of the contract.
