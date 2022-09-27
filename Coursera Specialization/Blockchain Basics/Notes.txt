@@ -1,0 +1,353 @@
+Blockchain Basics
+--
+Link => https://www.coursera.org/learn/blockchain-basics/
+
+
+Week One
+--
+
+Blocchain was designed to transfer peer to peer digital assets without any intermediaries
+Originally created to support famous cryptocurrency Bitcoin
+
+Bitcoin enabled an innovative platform for peer to peer transfer of value without any central authority
+
+How bitcoin gains trust without any central authority?
+By implementing programs for validation, verification, consensus in a novel infrastructure called blockchain
+
+What is blockchain?
+It is all about 
+  .Enabling peer to peer transaction in a decentralized network
+  .Establishing trust among unknown peers
+  .Recording the transaction in an immutable distributed ledger
+  
+
+
+URLS TO Study
+  1) https://www.pcmag.com/news/blockchain-the-invisible-technology-thats-changing-the-world
+  2) https://blockgeeks.com/guides/what-is-blockchain-technology/
+  3) https://bitcoin.org/bitcoin.pdf
+  4) https://queue.acm.org/detail.cfm?id=3136559
+  
+
+
+General brief overview of the whole process step by step
+..
+-Transaction is the basic element of the bitcoin blockchain
+-These transactions are validated and broadcasted
+-Many transactions form a block
+-Many blocks form a chain through a link
+-Blocks go through consensus process to be added to the chain
+-Validation and consensus process carried out by special peers called 'Miners'
+-Miners hold powerful computers executing the software defined by the blockchain protocol
+
+
+----------
+About UTXOx
+----------
+
+Study About UTXOx more => https://smithandcrown.com/glossary/unspent-transaction-outputs-utxo/
+
+Basic Operations in a blockchain network includes
+  1) Validation of transactions
+  2) Gathering transaction for a block
+  3) Broadcasting valid transaction and block
+  4) Consensus on next block creation
+  5) Chaining of blocks to form a blockchain
+  
+There are 2 types of participants in a network
+-Participants that initiate transfer of value by creating a transaaction
+-Participants that take on added work and does computation to verify and broadcast the transaaction. These are called Miners.
+ 
+Miners are rewarded with BTC for these efforts. Transaction validation is carried out by all miners independently and the process of
+validation involves more than 20 criteria that includes size, syntax, etc
+Some of the criterias include
+  .Referenced input UTXOx are valid
+  .Referenced output UTXOx are correct
+  .Referenced input and output amount matched sufficiently
+  
+All the valid transactions are added to pool of transaactions. Miners select these unconfirmed transaactions from this pool to create a block
+There is a challenge that every miner adds the block to the chain then there will be many branches of the chain resulting in an inconsitent
+form of the chain. There is a solution to solve this problem and that is to compete by solving a puzzle that who will add the block to the
+blockchain. Once the puzzle is solved, the announcement and the block both are broadcasted to the network notifying all the miners about it
+to add the new block to their local copy. This algorithm for consensus between miners is called Proof Of Work protocol
+
+Transaction 0 in every block in the bitcoin blockchain is for paying the miner fees. It does not have input UTXO and referred to as a coin
+base transaction
+
+URLs to Study
+  1) https://medium.com/blockchain-review/how-does-the-blockchain-work-for-dummies-explained-simply-9f94d386e093
+  2) https://onezero.medium.com/how-does-the-blockchain-work-98c8cd01d2ae
+  3) https://smartereum.com/8970/how-do-bitcoin-nodes-verify-transactions/
+  4) https://blog.ethereum.org/2015/08/07/on-public-and-private-blockchains
+  5) https://cointelegraph.com/blockchain-for-beginners/what-is-a-cryptocurrency-a-beginners-guide-to-digital-money#accept-as-payment-for-business
+  6) https://blockgeeks.com/guides/what-is-cryptocurrency/
+  7) https://www.coindesk.com/learn/how-does-blockchain-technology-work/
+
+
+Bitcoin Genesis Block => https://www.blockchain.com/explorer/blocks/btc/0  
+Ethereum Genesis Block => https://etherscan.io/block/0
+
+  
+  
+  
+  
+Week Two
+--
+
+Smart contract adds a layer of logic and computation to the trusted infrastructure of the blockchain
+
+Smart contract is a piece of code deployed on a blockchain node
+Execution of the Smart Contract is initiated by the message embedded in a transaction
+
+Smart Contract written in high level programming language is translated into EVM byte code and then deployed on the EVM
+Every ethereum node will host the same smart contract code
+
+URLs To Study
+  1) https://docs.soliditylang.org/en/develop/introduction-to-smart-contracts.html
+  2) https://blockgeeks.com/guides/smart-contracts/
+  
+
+Like Bitcoin blockchain, we have UTXOs as the blokchain state.
+Ethereum formally introduces the concept of 'Accounts' as a part of the protocol
+
+Account is the originator and the target of the transaction
+Transaction directly updates the account balance as to maintain the state like the bitcoin UTXO
+
+Account types includes
+  1) Externally Owned Accounts (EOA)
+       .Controlled by private key
+	   .It is needed to participate in the Ethereum blockchain
+	   
+  2) Contract Account (CA)
+       .Controller by the code and can by activated by the EOA
+	   .Represents a smart contract
+	   
+The participants in the ethereum network can send trasaction to either send ether transfer to any other peer or can also send transaction 
+to invoke the smart contract code or both at the same time. Both type of transaction need fees and an account must have sufficient fees 
+to send the transaaction
+
+The fees are payed in 'Wei' which is a lower denomination of Ether
+Conversion Rate Is,
+   1 Eth => 10*18 Wei
+   
+   
+Ethereum block has 
+   A header
+   A transaction
+   Runner Up Block header
+   
+   
+A transaction in ethereum includes
+   .Reciprient of the message
+   .Signature of the sender authorizing the transfer
+   .Amount of Wei to transfer
+   .Optional data field that contains any message to smart contract
+   .StartGas which is the maximum number of computational steps the transaction is allowed
+   .GasPrice which is the fee sender is willing to pay for the computation
+   
+   
+URLS To Study
+  1) https://ethereum.org/en/developers/docs/accounts/
+  2) https://geth.ethereum.org/docs/dapp/native-accounts
+  3) https://ethereum.org/en/whitepaper/
+  4) https://ethereum.stackexchange.com/questions/3/what-is-meant-by-the-term-gas
+  
+  
+Every action in ethereum requires crypto fuel or gas
+Ether value varies from market swings but Gas points do not vary
+
+If a fee specified in Gas point in a transaaction is not sufficient then it is rejected
+
+If an Ethereum block Gas Limit is for example 1500000 units and a plain ether transaaction takes 21,000 units then a typical ethereum
+block can contain 70 transactions (1500000 / 21000)
+If this block contains transaction for smart contract execution then obc this requires more gas and number of transaaction for a block will
+be lower.
+
+Gas Spent is the units used to create a particular block.
+
+Besides winner miner, there are also other miners who solves the puzzle called Ommers and blocks created by them are called Ommer blocks.
+These blocks are added as ommer blocks to the main chain. The Ommers also receive a small percentage of the total gas points
+
+PoV vs PoS => https://blockgeeks.com/guides/proof-of-work-vs-proof-of-stake/
+
+  
+  
+  
+  
+Week Three
+--
+
+2 techniques are used to secure the chain, validation & verification
+  1) Asymmetric Key encryption (Public Key Cryptography)
+  2) Hashing
+  
+In a blockchain decentralized network
+   .How do you identify the participants?
+   .How do you authorize and authenticate the transaaction?
+   .How do you detect forgery transactions.
+All these are done by public key cryptography algorithms 
+
+We have symmetric encryption in which the same key is used for encryption and decryption.
+For example "Ceasar Encryption" in which alphabets are shifter some indexes and that shift number is referred to as the key
+
+The symmetric encryption has 2 major issues
+   1) The key is easily derivable from the encrypted message
+   2) How do you pass the key to the receipant for decryption since same key is used for encrypting
+   
+These issues are addressed by public key cryptography where 2 individual keys are used for encrypting and decrypting mesages
+The 2 individual keys are Public and Private keys where public key is obviously public and private key is kept safe
+
+Public-Private key holds the unique quality that when the data is encryoted with private key then it can be decrypted with the
+corressponding public key or vice versa
+
+A basic example is to authenticate & authorize sender is that
+  Mr.X will encrypt the message with its private key and then encrypt the message with Mr.Y's public key
+  When Mr.Y receives the message, it will decrypt using its own private key and then Mr.X's public key
+In this way it is ensured that only Mr.Y can open the message and the message is only to be sent by Mr.X
+
+A popular example of Public Key Cryptography is the RSA (Rivest Shamir Adelman) Algorithm
+A common example of RSA implementation is password-less user authentication like accessing VMs on amazon cloud
+
+RSA used in most common applications, but blockchain needs more stronger algorithm 
+
+Elliptic Curve Cryptography (ECC) family of algorithms is used in the Bitcoin and Ethereum blockchain for generating the 
+public private key pair
+ECC is stronger than RSA for a given number of bits
+   .256 bits of ECC key pair is equivalent to about approximately 3072 bit RSA key pair
+   
+   
+URLs To Study
+   1) https://www.globalsign.com/en/ssl-information-center/what-is-public-key-cryptography
+   2) https://www.techtarget.com/searchsecurity/definition/asymmetric-cryptography
+   3) https://www.youtube.com/watch?v=GSIDS_lvRv4
+   4) https://blog.boot.dev/cryptography/elliptic-curve-cryptography/
+   
+
+Hashing or Hash function allows to convert an arbitrary length of input data into a unique fixed length value (mostly 256 bits)
+The main hashing requirements are
+   1) Should be a one way function
+   2) Collision free Or exhibit a very low collision rate.
+   
+Common hash functions are SHA-3, SHA-256 and Keccak
+
+2 different approaches for hashing
+  1) Simple Hash
+      We use simple hash when fixed number of items are to be hashed for example Block Header
+  2) Merkle Tree Hash
+      We use Tree Hash when number of items differ like Number of Transactions, Number of State (variable that may be mofified
+	  by a smart contract execution), Number of Receipts
+
+URLS To Study
+   1) https://blockgeeks.com/guides/what-is-hashing
+   2) https://www.youtube.com/watch?v=DMtFhACPnTY
+   3) https://www.cs.hmc.edu/~geoff/classes/hmc.cs070.200101/homework10/hashfuncs.html
+   
+
+
+About Transaction Identity
+..
+
+To manage the identity of a transaction we need,
+  1) Secure and Unique Account Addresses
+  2) Authorization of a Transaction through Digital Signature
+  3) Verification of the content of the transaction is not mofified
+  
+These are done by combination of Public Key Cryptography and Hashing
+
+Generation of Account Address and Key Pair Steps
+
+1) Private key is generated through 256 bit random number.
+2) ECC cryptography is applied to that private key to obtain the public key
+3) Hashing is applied to the public key to obtain the account address which is normally 160 bits or 20 bytes
+
+The transaction sent by this account address must be
+  .Authorized
+  .Non Repudible
+  .Unmodifiable
+  
+Transaction Steps
+
+1) Find the hash of the data fields of the transaction
+2) Encrypt the Hash using the private key of the initiator, thus digitally signing the transaction and making the transaction 
+   non-repudiable
+3) Add the encrypted data to the transaction so that others can decrypt using sender's public key
+4) Send the transaction
+5) Verifier will decrypt the data received in a transaction using sender's public key and take out transaction hash
+6) Recompute the transaction hash and compare the hash calculated with the hash received as a digital signature
+7) Accept the transaction if both hashes match
+
+Complete transaction verification includes,
+  .Account Balance
+  .Nonce
+  .Sufficieny of Fees
+  .Timestamp
+  
+URLS To Study
+    1) https://hbr.org/2017/03/how-safe-are-blockchains-it-depends
+	2) https://infospectives.co.uk/blockchains-embedding-integrity/
+	3) https://assets.kpmg/content/dam/kpmg/xx/pdf/2017/05/securing-the-chain.pdf
+	4) https://bitcoin.stackexchange.com/questions/35448/is-it-chain-of-headers-rather-than-a-chain-of-blocks
+	5) https://www.cryptocompare.com/coins/guides/what-is-a-block-header-in-bitcoin/
+	
+  
+  
+  
+  
+Week Four
+--
+
+Establishing trust in blockchain
+  -Secure chain using protocols
+  -Validate transactions & blocks
+  -Verify availibility of resources
+  -Executing and COnfirming transactions
+  
+The Tust Trail Steps
+
+Step 1 involves valdiating the transaction
+Step 2 invlolves verify enough gas and resources
+
+Bitcoin BLockchain involves around 20 different criterias that are checked before transaction is validated
+In Ethereum, following things are validated before execution
+   -Syntax, Transaction Signature, Hash, Gas, Timestamp, Nonce, Sender Account Balance, 
+    Fuel/Gas points for smart contract execution
+	
+Step 3 involves execution of transaction
+
+Merkle Tree Hash of the validated transaction is computed. This is for Ethereum
+All miners execute the transaction for ether transfer as well as for smart contract execution
+
+Step 4 involves Consensus Protocol
+
+Every valid block added, builts more trust into the chain. Miners compete to add their block to the chain
+What if every miner want to add their candidate block to the chain?
+
+Proof Of Work is a consensus protocol which is used to choose the next block into the chain
+It is used by bitcoin and current version of ethereum blockchain
+The protocol is same but the implementations in these 2 blockchain will be different
+PoW uses hashing
+
+PoW from the perspective of miner,
+Firstly, calculate the hash of the block header which is a fixed value and a nonce which is a variable
+If the hash value is less than 2^128 for bitcoin and less than function of difficulty (F(Diff)) for ethereum,
+then the puzzle is solved
+If the condition is not satisfied then change the nonce value and repeat the process
+
+If the puzzle is solved, broadcast the block which will be verified by other miners. Non winning miners will add the new block
+to their local copy of the chain. The winner will get incentive for creating the block
+
+URLs To Study
+  1) https://www.youtube.com/watch?v=hYip_Vuv8J0
+  2) https://medium.com/wavesprotocol/review-of-blockchain-consensus-mechanisms-f575afae38f2
+  3) https://www.coindesk.com/markets/2017/03/04/a-short-guide-to-blockchain-consensus-protocols/
+  4) https://www.wired.com/story/how-the-blockchain-is-redefining-trust/
+  
+
+See Double Spending Problem and what if 2 miners solves the same puzzle very close in time
+Hard Forks and Soft Forks
+
+URLs To Study
+  1) https://www.trustnodes.com/2017/12/02/blockchain-forks-shown-hayek-right-wrong
+  2) https://www.coindesk.com/markets/2017/09/18/split-on-forks-blockchain-leaders-learn-tough-lessons-from-bitcoin-scaling/
+  3) https://www.youtube.com/watch?v=8uF7RVF2osk
+  
