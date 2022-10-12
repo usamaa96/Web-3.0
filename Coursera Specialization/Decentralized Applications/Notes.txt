@@ -1,0 +1,305 @@
+Decentralized Applications
+--
+
+Link => https://www.coursera.org/learn/decentralized-apps-on-blockchain
+
+Week One
+--
+
+DApps gives access to the blockchain for people to transact with each other without knowing about it.
+
+A simple DApp structure includes
+  .Client App with FE technology
+  .Backend including Blockchain and Smart Contracts
+  
+A DApp can also be created with a non blockchain backend
+  .IPFS (InterPlanetary File System) is an example of such architecture
+  
+  
+The Decentralized App Stack
+  .There is a blockchain server where a node is created
+  .The node hosts the EVM and Smart contracts run on those EVM
+  .The user interface of the DApp runs on top of this layer and they use Smart COntract for their logic
+  
+We create a single genesis node on the blockchain server
+
+There are network ids for the specific network.
+   .15 id if for private network
+   .Ropsten, public cross client Ethereum testnet is 3
+   .Rinkeby network id is 4
+   .Musicoin, music blockchain id is 7762959
+   
+Whenever we deploy a public blockchain, we should be aware of other public network ids
+
+We use "geth" command to install a node on blockchain server by creating a new account number (an externally own account EOA)
+Then this node is initialized by a custom genesis block which is the first block of the chain
+
+Example Initial Commands
+  1) geth --datadir ./ account new
+  2) geth --datadir ./ init customgenesis.json
+  3) geth --datadir ./ --maxpeers 95 --networkid 15 --port 3030xx console
+  
+It will generate Ethereum Node (ENode) address also called as BootNode
+Other nodes uses this ENode address to connect to this node to establish peer to peer network on which the blockchain operates
+
+For other peers (node) to join the blockchain, using the command
+  admin.addPeers(enode address followed by ip address and port)
+  eg: admin.addPeers("enode://d66cfcdYhNw018........38c@123.456.789@303xx")
+This will add the peer node to the blockchain network 15 just created
+This is how peer nodes are created and connected to join the blockchain network
+
+This is just one approcah to create a blockchain network
+
+URLs To Study
+  1) https://www.coindesk.com/learn/what-is-blockchain-technology/
+  2) https://www.cryptocompare.com/coins/guides/what-is-and-how-to-use-the-ens/
+  3) https://www.npmjs.com/package/ethereum-ens
+  4) https://blockchainhub.net/decentralized-applications-dapps/
+  5) https://www.youtube.com/watch?v=97ufCT6lQcY
+  
+
+We use APIs to interact with the blockchain network
+Example
+  1) Management APIs (admin, debug, personal, txpool), they support the management of the geth node
+  2) Web3 API (web3, eth, net), they support methods for the development of DApps
+  
+Example Functions of Management APIs,
+  -admin.addPeer()
+  -admin.nodeInfo()
+  -debug.dumpBlock(16), will display the block header info of block 16
+  -miner.start()
+  -miner.stop()
+  -miner.start(6), will start 6 parallel thread to the mining operation
+  -personal.newAccount(), will add new account in the node
+  -txPool.inspect(), will list all the pending transactions
+  
+
+From this we examine that
+  .debug api allow us to peek into the blockchain, study it and find issues by looking at the block 
+  .miner api allows you to control the nodes mining operation and set various settings for these operations
+  .personal api allows you to deal with the creation and management of the accounts within a node
+  .transaction pool api gives the access to several non standards rpc methods
+  
+  
+Other than that, we have the web3 api which is a javascript library that provides a web3 object especially designed to use with
+the web client or Ethereum DApp.
+It allows to communicate with the local node via RPC port
+It allows to access the "eth" object using web3.eth and "net" object via web3.net
+
+For a normal web request initiated by a user, it is directed to the HTTP with port 8080 and to the web server to be executed
+For a DApp, the geth client has to expose an RPC endpoint using RPC port command. The requests are transmitted as a JSON over
+RPC pipeline between the web client and the geth client. The requested function is executed using appropriate API and smart
+contract code
+
+URLs To Study
+  1) https://cointelegraph.com/news/worlds-first-dapi-decentralized-application-programming-interface
+  2) https://github.com/ethereum/wiki/wiki/JavaScript-API
+  
+
+
+
+
+Week Two
+--
+
+Truffle is the IDE from building an initial application template to a local blockchain for testing the completed DApp.
+
+Open the Ethereum VM provided in the course 1 final assignment. Here already node.js and truffle is installed
+We need to run some commands to update their version.
+Go To any folder and
+  1) truffle init (Will throw error)
+  2) sudo cp ./.npm-global/bin/truffle /usr/bin/truffle (From root directory cd ~)
+  3) truffle version
+  
+Go to the same folder and run truffle init for its initialization.
+It will create 3 folders 
+   -contracts
+   -migrations
+   -test
+Contracts folder contains Migration.sol file which is relevant to the deployment
+Migrations folder keeps track of all the changes and the deployments
+Test folder contains JS and Solidity tests
+
+The directory contains truffle.js file which contains truffle configuration includes
+   -Blockchain network ID
+   -IP
+   -RPC port
+   
+In the main directory, we use truffle compile command to build the artifacts of all our contracts stored in contracts/
+directory. The artifacts will be generated in the build/ folder
+
+Replace the current truffle.js file with this simple configuration
+module.exports{
+  networks:{
+    development: {
+	  host: "localhost",
+	  port: 9545,
+	  network_id: "*" (For any network id)
+	}
+  }
+}
+
+This will set the configuration for the local blockchain we will deploy
+We will now deploy the chain to our localhost
+
+Run truffle develop in main directory
+It will deploy to localhost:9545 and gives us 10 account addresses with all private keys to play with.
+
+Now to deploy the smart contract onto our chain,
+  1) Copy the Ballot.sol file from resources section and copy it to contracts/ folder
+  2) Create new file in migrations/ folder to deploy our Ballo smart contract into our local blockchain.
+
+Code for 2_deploy_ballot.js
+   var Ballot = artifacts.require("Ballot");
+   module.exports = function(deployer){ 
+	deployer.deploy(Ballot); 
+   };
+   
+3) Run truffle compile in main directory
+4) Run truffle migrate --reset to override the previous version of the smart contract and deploy our new contract
+
+
+URLs To Study
+  1) https://trufflesuite.com/guides/
+  2) https://www.capgemini.com/insights/expert-perspectives/
+  
+  
+For Test Driven Development, copy the test.js file and put in test/ folder.
+Use the truffle test command to run the tests.
+
+
+Copy the Ballot2 folder which contains end to end DApp with smart contract and the front end application
+Use the npm run dev command to run the local dev server using lite-server which will server the appliaction on localhost:3000
+
+Install MetaMask extension which is a digital wallet that helps connect with the underlying blockchain nodes and manage accounts
+Connect to the local chain with metamask and attach the accounts with it.
+Deploy the smart contrac using truffle migrate --reset and note that a small amount of fees will be deducted from account 1 
+
+
+
+
+
+Week 3
+--
+
+Consider using memory (temporary storage) variables for every transient data and storage (permanent storage) variable for 
+something needs to be persisted on the blockchain
+
+Arrays and Structs are by default storage variable even if used inisde local functions. So we have to give memory keyword when
+defining such variables
+
+We can define a lifetime and ownership of a smart contract
+Like if a smart contract is outdated, it will be useless to store on blockchain so we can kill that contract so no one can
+access it. We can validate that only the creator can delete it and the contract can be deleted after 1 year of its creation using
+modifiers
+
+URLs TO Study
+  1) https://www.youtube.com/watch?v=2cXC7YUm7Rk
+  2) https://nethereum.readthedocs.io/en/latest/contracts/calling-transactions-events/
+  3) https://media.consensys.net/technical-introduction-to-events-and-logs-in-ethereum-a074d65dd61e
+  
+There is a special smart contract called Oraclize which is used to access the external resource
+A normal smart contract cannot interact outside its source because it will affect the global consistency of a blockchain. The
+result of an operation on blockchain must be deterministic
+   .Whether Data
+   .Stock Market Data
+   .etc...
+
+usingOraclize is a smart contract that provides a query function to access external sources 
+
+URLs To Study
+  1) https://ethereumdev.io/getting-data-internet-oraclize/
+  2) https://docs.provable.xyz/
+  
+  
+  
+  
+  
+Week Four
+--
+
+Examples of The DApp
+=> https://www.stateofthedapps.com/
+
+URLs To Study
+  1) https://blockgeeks.com/guides/initial-coin-offering/
+  2) https://www.bloomberg.com/features/2017-the-ether-thief/  (DAO Theft that resulted in Hard fork for Ethereum (ETH and ETC)
+  
+
+
+Any standard brings order, safety and many more qualitative attributes to the field. It brings regulation and clarity
+
+EIP (Ethereum Improvement Proposal) is an approach to the improvement in the processes in Ethereum echosystem.
+EIP is used to manage
+  1) Protocol Specification
+  2) Improvements
+  3) Updates
+  4) Client APIs
+  5) Contract Standards
+  
+EIP handles issues at 4 different categories
+  1) Core -> Core Ethereum Protocol
+  2) Network -> Network Level Improvements
+  3) Interface -> ABI, RPCs
+  4) ERC -> Application level conventions and standards.
+  
+Looking at the ERC-20 and ERC-721 standards.
+
+What are ERCs?
+ERCs are Ethereum Request For Comments
+
+ERC for application level issues are given a proposal Id which makes it ERCN like ERC20, ERC721, etc.
+The solution draft in the ERC document  is discussed  in the community
+The results could be
+   Accepted, Rejected, Withdrawn, Deferred
+   
+The accepted ERC is allocated an EIP number and is implemented by the protocol
+
+Previously there were no standards to issue tokens and mint coins. Anybody can do this with an internet connection
+Lets consider the issues
+  1) What does the token represents?
+  2) What is the token value?
+  3) What can I do witht he token?
+  4) Can i exchange token with another token?
+  5) Is it fungible or non-fungible?
+  
+These and many issues are addresses in ERC20 and ERC721 standards
+ERC20 is specified as a smart contract interface. It allows set of rules that allow token DApps to interact with each other to be exchanged with each
+other 
+
+Interface looks like this
+contract ERC20Interface {
+  function totalSupply()
+  function balanceOf()
+  function allowance()
+  function transferFrom()
+  ..
+  ..
+  ..
+  ..
+  events...
+  ..
+  ..
+}
+Our custom contract need to implement the functions required by the ERC20Interface
+
+Examples of some ERC20 token are Auger REP, Aragon, Indorse, Artcoin, etc..
+
+ERC20 is a fungible token standard
+ERC721 is a non fingible token standard
+
+Fungible means able to be replace by another identicle item
+Example A 10Rs note can be replace by another 10Rs note
+
+Non fungible is the opposite of Fungible
+Example A puppy pet recognized by token A can not be replace by puppy pet recognized by token B. They cannot be exchanged with each other
+
+URLs To Study
+  1) https://blog.0xproject.com/the-difference-between-app-coins-and-protocol-tokens-7281a428348c
+  2) https://www.cnbc.com/2017/12/17/cryptokitties-makes-it-easy-to-understand-blockchain-and-genetics.html
+  3) https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
+  4) https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1.md
+  
+Is coin and token the same?
+Are Tokens the Same as Coins? Coins and tokens both represent a store of value, much like fiat currency, such as dollars, euros, yen, etc. 
+But there's a crucial difference: digital coins are a form of money, while digital tokens represent something that can be assigned a price.
