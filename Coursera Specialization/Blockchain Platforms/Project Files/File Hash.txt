@@ -1,0 +1,2 @@
+IPFS hash of myfile1.txt => QmdQGKkvPDbMErygDQ4FaV4a6ADfR4vBv8vFUUvsjwpHQJ
+IPFS hash of the folder => QmScVyy3AUpBgWuVDwRnGJ9XcD1Ppz1mUtrRH6EA7XLWgL

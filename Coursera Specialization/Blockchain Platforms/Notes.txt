@@ -1,0 +1,317 @@
+Blockchain Platforms
+--
+Link => https://www.coursera.org/learn/blockchain-platforms
+
+
+Week One
+--
+
+Permissioned Blockchain is the network where a node can trasact with having certain permissions
+It is also known as consortium blockchain
+
+About Hyperledger
+
+Hyperledger Itself is Not
+  -A Cryptocurrency
+  -A Blockchain
+  -A Company
+  
+It is a project under Linux Foundation. There are many projects under Linux Foundation like Node, Linux OS etc
+Linux foundation initiated the Hyperledger project to promote cross industry collaborations. The goal is to bring together stakeholders, tech providers,
+developers to develop blockchain based solutions for their particular business.
+
+In Hyperledger project there are multiple tools and frameworks available. For blockchain, one of the important framework is Hyperledger Fabric
+Whenever we talk about blockchain, the first thing comes to our mind is crypcurrencies / bitcoint
+But blockchain is not just about cryptocurrencies which is proved by Ethereum
+
+Bitcoin and Ethereum are public blockchains. Everyone can see what is going one
+What if some enterprise company wants to build a solution on blockchain but they dont want to show their data to everyone nor spent money for the
+mining.
+
+Here private blockchain comes into picture. Node who needs to join the network must enroll themself through MSP (Membership Service Provider)
+Hyperledger Fabric is a private / permissioned business blockchain where we can create such thing as subnets between the nodes which are called 
+channels in which only those nodes can see the transactions and no one else.
+If One node is part 2 networks then it will contain 2 ledgers. One for Network 1 and One for Network 2
+
+Amazing part with Fabric is that they have separated the ledger in 2 parts
+  1) World State which stores the current state of the chaincode
+  2) Transaction Log which holds all the history of the states of the chaincode.
+  
+If there is an Asset A sold by Peer X to Y who solds to peer Z then the World state holds current asset holder as peer Z and Peer X and Y will be in the
+transaction Log as a history of asset A
+
+It is designed to handle business logic just like smart contract. The smart contract code in hyperledger
+is called the chaincode.
+PBFT (Practical Byzantine Fault Tolerance) is the consensus algo used in hyperledger
+
+URLs To Study
+  1) https://www.hyperledger.org/about
+  2) https://hyperledger.github.io/composer/latest/tutorials/tutorials.html
+  3) https://www.youtube.com/watch?v=irCIDxA5asc
+  4) https://www.youtube.com/watch?v=CsauV-9zHAk
+  5) https://www.youtube.com/watch?v=oGbcdToJa7w
+  6) https://hyperledger-fabric.readthedocs.io/en/release-1.1/peer_event_services.html
+  7) https://openblockchain.readthedocs.io/en/latest/API/CoreAPI/
+  8) https://hyperledger-fabric.readthedocs.io/en/release-1.1/fabric_model.html
+  9) https://www.hyperledger.org/wp-content/uploads/2017/08/Hyperledger_Arch_WG_Paper_1_Consensus.pdf
+  
+
+Hyperledger prject defines several tools to develop applications
+Some of the toole sare
+  1) Yeoman Tool (Used to create skeleton business network)
+  2) Compose Modeling (Used to define assets of business application)
+  3) Compose (For Deploying application)
+  
+Compose tool is similar to truffle (used for dApp development)
+
+Developing Blockchain Network
+
+  1) Use Yeoman tool for developing business network
+       .cto file contains class definition for assets, participants and transactions
+	   .js file contains transaction functions
+	   .acl file contains access control rules
+  2) Package the entire directory using Composer Tool to package the code into a deployable business netowrk archive
+       .composer sets the credentials, runs the server and deploy the appliction
+	   .composer playground allows to interact with the deployed business netowrk
+  3) Generate the Rest Server to interact with it.
+  
+Follow the Demo file for all the steps related to starting the fabric, setting the business netowrk, deploying it and interacting with it.
+
+URLs To Study
+  1) https://www.hyperledger.org/use/composer
+  2) https://www.youtube.com/watch?v=PvrLJTGfje0
+  3) https://hyperledger.github.io/composer/latest/reference/cto_language
+  4) https://developer.ibm.com/tutorials/cl-model-test-your-blockchain-network-with-hyperledger-composer-playground/
+  
+Microsoft Azure provide blockchain platform as a service to quickly set up and prototype several different blockchains like Ethereum, Corda,
+Hyperledger etc
+Top level aim of Microsoft Azure is to accelerate blockchain deployment.
+
+
+
+Week Two
+--
+
+Augur and Grid+ are 2 dAapp platforms implemented on Ethereum
+These 2 illustrates 2 very diverse uses of the blockchain
+
+Augur is a trustless, decentralized prediction market platform based on blockchain technology
+Participants can join and leave as they wish (reason for being trustless)
+
+**Prediction markets are open markets where specific outcomes can be predicted using financial incentives.
+
+Participants are not bound by any central authority
+The market creator post a market event
+Market reporters invest on the outcome of the event
+Once the outcome is finalised, the participants who forecasted the outocome correctly win a payback and other lose their money
+
+This end to end process is carried out automatically by Ethereum Smart COntract
+
+URLs To Study
+  1) https://www.weusecoins.com/what-is-augur/
+  2) https://medium.com/@Cryptokeeper/augur-the-worlds-most-undervalued-crypto-project-62934686a016
+  3) https://www.youtube.com/watch?v=579SRoK_kdQ
+  
+
+
+Grid+ is the dApp platform for energy echosystem on the smart contract layer
+Energy supply chain has 4 stages
+  1) Energy production
+  2) Energy transmission
+  3) Energy Distribution
+  4) Energy Retail
+  
+Grid+ aims to make electricity cost effective, reliable and robust
+It has created an energy echosystem by integrating blockchain and AI
+It aims to move energy transfer and payment transaction on blockchain architecture 
+
+
+
+Week Three
+--
+
+Challenges and Solutions
+
+
+Consensus means general agreement
+In Blockchain, consensus is an agreement between the full nodes for the new block to be added to the chain
+
+Bitcoin uses Proof of Work as consensus. It is computationally expensive
+It is said that bitcoin consumes as much energy as a country of Ireland per day
+
+There lies a problem, PoW use enormous energy to mine a block
+
+
+Alternate to PoW
+
+Proof Of Work (PoS)
+
+Ethereum followed PoW with slight modifications
+Ethereum Metropolis still utilises PoW memory based which is not that much energy intensive
+Ethereum Constantinople uses Proof of Stake (PoS)
+
+In PoS, the full node with most stake, most coin is chosen to add the next block
+The idea is that node with most stake will not be malicious and will never risk its stake for damaging the network
+To avoid monopoly by the node with most stake, an age based round robin policy is used in addition to PoS
+Minter pee is paid by the transaction fee and there is no separate miner fee such as in PoW
+PoS is environment firendly and effecient and adopted by many blockchain platforms
+
+
+Practical Byzantine Fault Tolerance (PBFT)
+
+Nodes vote to elect the leader and that node adds the block to the chain
+It is popular in permissioned blockchain like Hyperledger Fabric
+
+URLs To Study
+  1) https://mastanbtc.github.io/blockchainnotes/consensustypes/
+  2) https://blockgeeks.com/guides/blockchain-consensus/
+  
+
+Blockchain has taken the responsibility of the intermediaries in the form of
+  -Validation
+  -Verification
+  -Record of the transaction
+  -Consensus process for the integrity of the chain
+All this takes some time and a significant overhead in the confirmation of the transaction when compared to the centralized system
+
+Every full node stores the entire chain of blocks. All these impede the scalability of the blockchain application
+Scalability of a system is referred to as the ability of a system  to perform satisfactory at all practical levels of load.
+
+The "load" in the blockchain context could be transactions, number of nodes, number of accounts etc 
+We focus on transaction per second as a metric for scalability
+
+The most obvious solution to increase transaction rate is to increase number of transactions per block
+Bitcoin addresses it in 2 ways
+  1) Segregated Witness (SegWit)
+      .Transactions and Signatures are segregated allowing more transactions per block. This was a soft fork done in 2017
+  2) Increase the block size limit from 1MB to 2MB fixed size
+  
+In Ethereum block size can vary and is limited by the gas limit specified in the block header
+Number of transactions in a block dictates the block size
+
+These are some of the solution related to on-chain
+
+For improving scalability we can also refer to as
+  1) Off chain scalability
+  2) Sharding
+  3) Parallel Processing
+  
+URLs To Study
+  1) https://blockgeeks.com/guides/blockchain-scalability/
+  2) https://www.youtube.com/watch?v=LxuLhPtIiHA
+  3) https://www.youtube.com/watch?v=gMFp66FRjZo
+  
+
+
+Privacy vs Confidentiality
+
+Privacy refer to as the protection of data, attributes, assets from an observation of untrusted parties
+Confidentiality refer to as access of data by the authorized users
+
+Bitcoin is a public blockchain and we can see all the transactions happening there
+Many blockchains are permissioned like Hyperledger Fabric. They limit access to permissioned entites only. THis ensures privacy of the network
+
+Some of the blockchain platforms like MultiChain ensures that transacting nodes are indeed in a permissioned list
+It also authenticates sender and receiver using key exchange for every transaction
+
+For confidentiality the basic method is to encrypty the data and digitally sign it and obfuscate the data by adding extra elements (faking and secret
+value addition)
+
+URLs To Study
+  1) https://hackernoon.com/smart-contracts-privacy-vs-confidentiality-645b6e9c6e5a
+  
+
+
+Escrow and Multi Signatures
+
+These are the 2 techniques to address business contract related issues
+
+Escrow => An agreement between two people or organizations in which money or property is kept by a third person or organization until a particular 
+condition is met
+
+A smart contract can do this. It can hold money and artifacts and allow transacting parties to negotiate on it and verify confitions to be met
+before the disbursement of the items.
+
+We can use 3 specific features of smart contract to develop escrow based application
+  1) Include escrow based amount as a state variable i.e uint escrowAmount;
+  2) Use modifiers to met the conditions for the disbursment of the escrow
+  3) Define the functions that apply those modifiers
+  
+Holding escrow commonly works in conjunction with multiple signatures which is known as Multi-Sig feature
+Many real worl contracts have multi signature feature for
+  1) Security
+  2) Verification
+  3) Protection of assets
+  4) Businesses
+  ...
+  ...
+  
+A signature in the crypto world is the private key of the address. Transactions are signed by this key for the verification of the senders
+authenticity
+Multi-sig address in Bitcoin begins with a character 3 (Hash Example => 341xmJsl......Yt3)
+
+URLs To Study 
+  1) https://dappsforbeginners.wordpress.com/tutorials/two-party-contracts/
+  
+  
+  
+  
+Week Four
+--
+
+Alternative Decentralized Solutions
+
+
+1) IPFS (Interplanetary File System)
+
+IPFS is a decentralized model for file transfer. The transfer is provided by the HTTP familty of protocols
+HTTP is operated in a centralized hierarchical namespace
+
+Example
+http://www.cse.buffalo.edu where each item is resolved hierarchically by the DNS
+
+Instead of identifying the resource by its location as an Http, IPFS identifies the resource by its content or by secure hash of its content
+The hashes are stored in Distributed Hash Table (DHT) where a hash to location key value pair is stored
+
+URLs To Study
+  1) https://themerkle.com/what-is-the-interplanetary-file-system/
+  2) https://www.youtube.com/watch?v=8CMxDNuuAiQ
+  3) https://medium.com/@ConsenSys/an-introduction-to-ipfs-9bba4860abd0
+  4) https://yeoman.io/
+
+
+
+
+2) HashGraph
+
+The hashgraph algorithm, is a consensus mechanism based on a virtual voting algorithm combined with the gossip protocol to achieve consensus quickly, 
+fairly, efficiently, and securely. 
+
+It aims to address one of the most intense issue in the current public blockchain, the consensus model that assures trust in decentralized system
+In Ethereum Metropolis and bitcoin the consensus is achieved by PoW
+The cost is quit hight for PoW
+
+Hashgraph is a mathematical algorithm, trust model that provides a consensus layer that addresses the transaction latency, energy wasted, fairness 
+and also provide computationally strong algorithm
+
+Miner can pick any number of transaction from the mempool in any order to form a block and add that block to the blockchain. This result in the 
+competition and race to solve the PoW puzzle that consumes a lot of computational power
+
+The goal of the hashgraph is to order the transactions with low latency and minimal power consumption.
+
+Hashgraph is an alternative to blockchain — a first generation tech with severe constraints in terms of speed, fairness, cost, and security
+Hashgraph aims to provide the benefits of blockchain as a distributed ledger technology without the limitations. While many ledgers use the gossip 
+protocol, Hashgraph combined the gossip protocol in the form of “gossip about gossip” with a voting algorithm to reach consensus quickly and securely 
+without proof of work. The gossip protocol shares new information that other nodes don’t know, and the gossip about gossip includes where that new 
+information originated.
+
+The consensus is achieved using gossiping information about new transactions
+The edges in a hashgraph are generated by gossiping of events between nodes  
+
+
+URLs To Study
+  1) https://techcrunch.com/2018/03/13/hashgraph-wants-to-give-you-the-benefits-of-blockchain-without-the-limitations/?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuY291cnNlcmEub3JnLw&guce_referrer_sig=AQAAAA5c1ahNhY-ajz4pLLjRXe0Wq5JEXUmcC0usz8j0XOTNzcGH-ESuuvfom7NLa3AsH_92_jS4eYEh3Cyx3koWfpefh6s9APflZfIth87GzYEljbqYYVdlUZn-WkmuKo4OTfkZ_XTigQFZtaJ_Xiep4P_b6_H9byZfK6tkf1nrYy8D
+  2) https://www.swirlds.com/whitepapers/
+  3) https://www.youtube.com/watch?v=MzWiiOLv96I
+  4) https://www.swirlds.com/downloads/SWIRLDS-TR-2016-02.pdf
+  
